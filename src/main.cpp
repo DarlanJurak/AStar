@@ -4,9 +4,9 @@
 
 #include "GridWithWeights/GridWithWeights.hpp"
 #include "PriorityQueue/PriorityQueue.hpp"
-#include "Dijkstra/Dijkstra.cpp"
+#include "AStar/AStar.cpp"
 
-void Test0_Dijkstra(int, int, int, int);
+void Test0_AStar(int, int, int, int);
 
 int main(int argc, char** argv) {
 
@@ -31,21 +31,21 @@ int main(int argc, char** argv) {
 
     if(argc > 4){
 
-        Test0_Dijkstra(num[0], num[1], num[2], num[3]);
+        Test0_AStar(num[0], num[1], num[2], num[3]);
 
     }else{
 
-        Test0_Dijkstra(-1, -1, -1, -1);
+        Test0_AStar(-1, -1, -1, -1);
 
     }
 
-    // Test0_Dijkstra(NULL, NULL, NULL, NULL);
+    // Test0_AStar(NULL, NULL, NULL, NULL);
         
     return 0;
 
 }
 
-void Test0_Dijkstra(int startX=-1, int startY=-1, int goalX=-1, int goalY=-1){
+void Test0_AStar(int startX=-1, int startY=-1, int goalX=-1, int goalY=-1){
 
     GridWithWeights sg  = make_diagram4();
 
@@ -60,7 +60,7 @@ void Test0_Dijkstra(int startX=-1, int startY=-1, int goalX=-1, int goalY=-1){
     std::unordered_map<Pos, Pos>    came_from;
     std::unordered_map<Pos, double> cost_so_far;
 
-    Dijkstra_Search(sg, start, goal, came_from, cost_so_far);
+    AStar_Search(sg, start, goal, came_from, cost_so_far);
 
     draw_grid(sg, 2, nullptr, &came_from);
     std::cout << '\n';

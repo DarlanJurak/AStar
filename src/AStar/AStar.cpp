@@ -4,20 +4,23 @@
 #include "../GridWithWeights/GridWithWeights.hpp"
 
 template<typename Pos> std::vector<Pos> reconstruct_path( Pos start, Pos goal, std::unordered_map<Pos, Pos> came_from );
-
+// Heuristc function
+inline double heuristic(Pos a, Pos b) {
+  return std::abs(a.x - b.x) + std::abs(a.y - b.y);
+}
 
 /*
 *
-* Description: Dijkstra (lol)
+* Description: AStar (lol)
 *
 */
 template<typename Pos, typename GridWithWeights>
-void Dijkstra_Search
+void AStar_Search
   (GridWithWeights graph,
    Pos start,
    Pos goal,
-   std::unordered_map<Pos, Pos>& came_from,
-   std::unordered_map<Pos, double>& cost_so_far)
+   std::unordered_map<Pos, Pos>    &came_from,
+   std::unordered_map<Pos, double> &cost_so_far)
 {
   PriorityQueue<Pos, double> frontier;                                      // Ordering frontier exploration by lowest cost
   frontier.put(start, 0);                                                   // Frontier exploration starts on start point
@@ -39,8 +42,9 @@ void Dijkstra_Search
       if (cost_so_far.find(next) == cost_so_far.end()                       // Position not considered yet
           || new_cost < cost_so_far[next]) {                                // During a expansion comming from another path, the cost can be lower, so we updated our data structures wih this information
         cost_so_far[next] = new_cost;
-        came_from[next]   = current;
-        frontier.put(next, new_cost);
+        double priority   = new_cost + heuristic(next, goal);
+        frontier.put(next, priority);
+        came_from[next]   = current;        
       }
     }
   }

@@ -12,7 +12,7 @@ struct GridWithWeights: SquareGrid {
 };
 
 GridWithWeights make_diagram4() {
-  GridWithWeights grid(10, 10);
+  GridWithWeights grid(20, 20);
   add_rect(grid, 1, 7, 4, 9);
   typedef Pos L;
   grid.forests = std::unordered_set<Pos> {
